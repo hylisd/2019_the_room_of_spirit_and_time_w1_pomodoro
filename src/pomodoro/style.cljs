@@ -2,15 +2,24 @@
   (:require [stylefy.core :as stylefy]))
 
 
+(def color-deepblue "#003164")
+
 ;; color
 (def white-color
   {:color "white"})
 (def main-color
   {:color "#FF4384"})
 
-(def pomodoro-main
-  {:background-color "#FFEDF7" :display "block" :width "1280px" :height "800px"
+(def basic-layout {:display "block" :width "1280px" :height "800px"
    :margin "0 auto" :position "relative"})
+
+(def pomodoro-main
+  (merge basic-layout
+         {:background-color "#FFEDF7"}))
+
+(def pomodoro-config
+  (merge basic-layout
+         {:background-color color-deepblue :display "flex"}))
 
 (def main-sider
   {:width "450px"

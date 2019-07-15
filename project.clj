@@ -34,6 +34,7 @@
                          :output-dir "public/js/out"
                          :asset-path   "js/out"
                          :source-map true
+                         :externs ["externs.js"]
                          :optimizations :none
                          :pretty-print  true}
                         :figwheel
@@ -46,6 +47,7 @@
                          :output-dir "public/js/release"
                          :optimizations :advanced
                          :infer-externs true
+                         :externs ["externs.js"]
                          :pretty-print false}}}}
 
   :aliases {"package" ["do" "clean" ["cljsbuild" "once" "release"]]}

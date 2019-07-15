@@ -15,8 +15,7 @@
 
 (defonce start-count (r/atom false)) ; TODO rename pause counter
 
-;; TODO rename current-page
-(defonce page (r/atom :main)) ; :todo-list :analytics :ringtones
+(defonce current-page (r/atom :main)) ; :todo-list :analytics :ringtones
 
 (defonce todo-list (r/atom ["THE FIRST THING TO DO TODAY"
                             "THE SECOOND THINGS TO DO TODAY 2"
@@ -44,10 +43,10 @@
   (r/render [component] (.getElementById js/document "app")))
 
 (defn mount-root []
-  (render-component-to-app (@page route)))
+  (render-component-to-app (@current-page route)))
 
 (defn init-router []
-  (add-watch page :watcher
+  (add-watch current-page :watcher
              (fn [key atom old-state new-state]
                (render-component-to-app (new-state route)))))
 
