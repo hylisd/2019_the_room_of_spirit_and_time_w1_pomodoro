@@ -1,0 +1,248 @@
+// Compiled by ClojureScript 1.10.520 {:static-fns true, :optimize-constants true}
+goog.provide('stylefy.impl.conversion');
+goog.require('cljs.core');
+goog.require('cljs.core.constants');
+goog.require('garden.core');
+goog.require('stylefy.impl.utils');
+goog.require('garden.stylesheet');
+goog.require('clojure.string');
+goog.require('garden.compiler');
+/**
+ * Checks all values in the map and converts all Garden units to CSS.
+ */
+stylefy.impl.conversion.garden_units__GT_css = (function stylefy$impl$conversion$garden_units__GT_css(props){
+return cljs.core.reduce.cljs$core$IFn$_invoke$arity$3((function (result,next_key){
+var value = (next_key.cljs$core$IFn$_invoke$arity$1 ? next_key.cljs$core$IFn$_invoke$arity$1(props) : next_key.call(null,props));
+if(stylefy.impl.utils.is_garden_value_QMARK_(value)){
+return cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(result,next_key,garden.compiler.render_css(value));
+} else {
+return result;
+}
+}),props,cljs.core.keys(props));
+});
+stylefy.impl.conversion.convert_stylefy_vendors_to_garden = (function stylefy$impl$conversion$convert_stylefy_vendors_to_garden(props){
+var temp__5737__auto__ = cljs.core.cst$kw$stylefy$core_SLASH_vendors.cljs$core$IFn$_invoke$arity$1(props);
+if(cljs.core.truth_(temp__5737__auto__)){
+var vendors = temp__5737__auto__;
+return new cljs.core.PersistentArrayMap(null, 2, [cljs.core.cst$kw$vendors,vendors,cljs.core.cst$kw$auto_DASH_prefix,cljs.core.cst$kw$stylefy$core_SLASH_auto_DASH_prefix.cljs$core$IFn$_invoke$arity$1(props)], null);
+} else {
+return null;
+}
+});
+stylefy.impl.conversion.convert_stylefy_modes_garden = (function stylefy$impl$conversion$convert_stylefy_modes_garden(props){
+var modes = cljs.core.cst$kw$stylefy$core_SLASH_mode.cljs$core$IFn$_invoke$arity$1(props);
+return cljs.core.mapv.cljs$core$IFn$_invoke$arity$2(((function (modes){
+return (function (mode_name){
+if((((mode_name instanceof cljs.core.Keyword)) || (((typeof mode_name === 'string') && (clojure.string.starts_with_QMARK_(mode_name,":")))))){
+} else {
+throw (new Error(["Assert failed: ",["Mode must be specified as a keyword or string beginning with colon, got: ",cljs.core.pr_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([mode_name], 0))].join(''),"\n","(or (keyword? mode-name) (and (string? mode-name) (str/starts-with? mode-name \":\")))"].join('')));
+}
+
+if(((typeof mode_name === 'string') && ((cljs.core.count(clojure.string.split.cljs$core$IFn$_invoke$arity$2(mode_name," ")) > (1))))){
+console.warn(["Incorrect mode detected, should not contain spaces. Mode was: ",cljs.core.pr_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([mode_name], 0))].join(''));
+} else {
+}
+
+return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(["&",cljs.core.str.cljs$core$IFn$_invoke$arity$1(mode_name)].join('')),cljs.core.get.cljs$core$IFn$_invoke$arity$2(modes,mode_name)], null);
+});})(modes))
+,cljs.core.keys(modes));
+});
+stylefy.impl.conversion.class_selector = (function stylefy$impl$conversion$class_selector(hash){
+return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1([".",cljs.core.str.cljs$core$IFn$_invoke$arity$1(hash)].join(''));
+});
+/**
+ * Converts Clojure style map into CSS class.
+ */
+stylefy.impl.conversion.convert_base_style_into_class = (function stylefy$impl$conversion$convert_base_style_into_class(p__33027,options){
+var map__33028 = p__33027;
+var map__33028__$1 = (((((!((map__33028 == null))))?(((((map__33028.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__33028.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__33028):map__33028);
+var style = map__33028__$1;
+var props = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33028__$1,cljs.core.cst$kw$props);
+var hash = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33028__$1,cljs.core.cst$kw$hash);
+var custom_selector = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33028__$1,cljs.core.cst$kw$custom_DASH_selector);
+var css_props = stylefy.impl.utils.filter_css_props(props);
+var css_selector = (function (){var or__4131__auto__ = custom_selector;
+if(cljs.core.truth_(or__4131__auto__)){
+return or__4131__auto__;
+} else {
+return stylefy.impl.conversion.class_selector(hash);
+}
+})();
+var garden_class_definition = new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [css_selector,css_props], null);
+var garden_pseudo_classes = stylefy.impl.conversion.convert_stylefy_modes_garden(props);
+var garden_vendors = stylefy.impl.conversion.convert_stylefy_vendors_to_garden(props);
+var garden_options = (function (){var or__4131__auto__ = cljs.core.merge.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([options,garden_vendors], 0));
+if(cljs.core.truth_(or__4131__auto__)){
+return or__4131__auto__;
+} else {
+return cljs.core.PersistentArrayMap.EMPTY;
+}
+})();
+var css_class = garden.core.css.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([garden_options,cljs.core.into.cljs$core$IFn$_invoke$arity$2(garden_class_definition,garden_pseudo_classes)], 0));
+return css_class;
+});
+/**
+ * Converts stylefy/media definition into CSS media query.
+ */
+stylefy.impl.conversion.convert_media_queries = (function stylefy$impl$conversion$convert_media_queries(p__33030,options){
+var map__33031 = p__33030;
+var map__33031__$1 = (((((!((map__33031 == null))))?(((((map__33031.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__33031.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__33031):map__33031);
+var style = map__33031__$1;
+var props = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33031__$1,cljs.core.cst$kw$props);
+var hash = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33031__$1,cljs.core.cst$kw$hash);
+var custom_selector = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33031__$1,cljs.core.cst$kw$custom_DASH_selector);
+var temp__5737__auto__ = cljs.core.cst$kw$stylefy$core_SLASH_media.cljs$core$IFn$_invoke$arity$1(props);
+if(cljs.core.truth_(temp__5737__auto__)){
+var stylefy_media_queries = temp__5737__auto__;
+var css_selector = (function (){var or__4131__auto__ = custom_selector;
+if(cljs.core.truth_(or__4131__auto__)){
+return or__4131__auto__;
+} else {
+return stylefy.impl.conversion.class_selector(hash);
+}
+})();
+var css_media_queries = cljs.core.map.cljs$core$IFn$_invoke$arity$2(((function (css_selector,stylefy_media_queries,temp__5737__auto__,map__33031,map__33031__$1,style,props,hash,custom_selector){
+return (function (media_query){
+var media_query_props = cljs.core.get.cljs$core$IFn$_invoke$arity$2(stylefy_media_queries,media_query);
+var media_query_css_props = stylefy.impl.utils.filter_css_props(media_query_props);
+var garden_class_definition = new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [css_selector,media_query_css_props], null);
+var garden_pseudo_classes = stylefy.impl.conversion.convert_stylefy_modes_garden(media_query_props);
+var garden_vendors = stylefy.impl.conversion.convert_stylefy_vendors_to_garden(media_query_props);
+var garden_options = (function (){var or__4131__auto__ = cljs.core.merge.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([options,garden_vendors], 0));
+if(cljs.core.truth_(or__4131__auto__)){
+return or__4131__auto__;
+} else {
+return cljs.core.PersistentArrayMap.EMPTY;
+}
+})();
+return garden.core.css.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([garden_options,garden.stylesheet.at_media.cljs$core$IFn$_invoke$arity$variadic(media_query,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([cljs.core.into.cljs$core$IFn$_invoke$arity$2(garden_class_definition,garden_pseudo_classes)], 0))], 0));
+});})(css_selector,stylefy_media_queries,temp__5737__auto__,map__33031,map__33031__$1,style,props,hash,custom_selector))
+,cljs.core.keys(stylefy_media_queries));
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.str,css_media_queries);
+} else {
+return null;
+}
+});
+/**
+ * Converts stylefy/supports definition into CSS feature query.
+ */
+stylefy.impl.conversion.convert_supports_rules = (function stylefy$impl$conversion$convert_supports_rules(p__33033,options){
+var map__33034 = p__33033;
+var map__33034__$1 = (((((!((map__33034 == null))))?(((((map__33034.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__33034.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__33034):map__33034);
+var style = map__33034__$1;
+var props = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33034__$1,cljs.core.cst$kw$props);
+var hash = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33034__$1,cljs.core.cst$kw$hash);
+var custom_selector = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33034__$1,cljs.core.cst$kw$custom_DASH_selector);
+var temp__5737__auto__ = cljs.core.cst$kw$stylefy$core_SLASH_supports.cljs$core$IFn$_invoke$arity$1(props);
+if(cljs.core.truth_(temp__5737__auto__)){
+var stylefy_supports = temp__5737__auto__;
+var css_selector = (function (){var or__4131__auto__ = custom_selector;
+if(cljs.core.truth_(or__4131__auto__)){
+return or__4131__auto__;
+} else {
+return stylefy.impl.conversion.class_selector(hash);
+}
+})();
+var css_supports = cljs.core.map.cljs$core$IFn$_invoke$arity$2(((function (css_selector,stylefy_supports,temp__5737__auto__,map__33034,map__33034__$1,style,props,hash,custom_selector){
+return (function (supports_selector){
+var supports_props = cljs.core.get.cljs$core$IFn$_invoke$arity$2(stylefy_supports,supports_selector);
+var supports_css_props = stylefy.impl.utils.filter_css_props(supports_props);
+var garden_class_definition = new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [css_selector,supports_css_props], null);
+var garden_pseudo_classes = stylefy.impl.conversion.convert_stylefy_modes_garden(supports_props);
+var garden_vendors = stylefy.impl.conversion.convert_stylefy_vendors_to_garden(supports_props);
+var garden_options = (function (){var or__4131__auto__ = cljs.core.merge.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([options,garden_vendors], 0));
+if(cljs.core.truth_(or__4131__auto__)){
+return or__4131__auto__;
+} else {
+return cljs.core.PersistentArrayMap.EMPTY;
+}
+})();
+var css_media_queries_inside_supports = stylefy.impl.conversion.convert_media_queries(new cljs.core.PersistentArrayMap(null, 3, [cljs.core.cst$kw$props,supports_props,cljs.core.cst$kw$hash,hash,cljs.core.cst$kw$custom_DASH_selector,custom_selector], null),options);
+return ["@supports (",cljs.core.str.cljs$core$IFn$_invoke$arity$1(supports_selector),") {",cljs.core.str.cljs$core$IFn$_invoke$arity$1(garden.core.css.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([garden_options,cljs.core.into.cljs$core$IFn$_invoke$arity$2(garden_class_definition,garden_pseudo_classes)], 0))),cljs.core.str.cljs$core$IFn$_invoke$arity$1(css_media_queries_inside_supports),"}"].join('');
+});})(css_selector,stylefy_supports,temp__5737__auto__,map__33034,map__33034__$1,style,props,hash,custom_selector))
+,cljs.core.keys(stylefy_supports));
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.str,css_supports);
+} else {
+return null;
+}
+});
+/**
+ * Converts stylefy/manual definition into CSS.
+ */
+stylefy.impl.conversion.convert_manual_styles = (function stylefy$impl$conversion$convert_manual_styles(p__33037,options){
+var map__33038 = p__33037;
+var map__33038__$1 = (((((!((map__33038 == null))))?(((((map__33038.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__33038.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__33038):map__33038);
+var style = map__33038__$1;
+var props = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33038__$1,cljs.core.cst$kw$props);
+var hash = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33038__$1,cljs.core.cst$kw$hash);
+var custom_selector = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33038__$1,cljs.core.cst$kw$custom_DASH_selector);
+var temp__5737__auto__ = cljs.core.cst$kw$stylefy$core_SLASH_manual.cljs$core$IFn$_invoke$arity$1(props);
+if(cljs.core.truth_(temp__5737__auto__)){
+var stylefy_manual_styles = temp__5737__auto__;
+var css_parent_selector = (function (){var or__4131__auto__ = custom_selector;
+if(cljs.core.truth_(or__4131__auto__)){
+return or__4131__auto__;
+} else {
+return stylefy.impl.conversion.class_selector(hash);
+}
+})();
+var css_manual_styles = cljs.core.map.cljs$core$IFn$_invoke$arity$2(((function (css_parent_selector,stylefy_manual_styles,temp__5737__auto__,map__33038,map__33038__$1,style,props,hash,custom_selector){
+return (function (manual_style){
+var manual_selector_and_css_props = clojure.walk.walk(((function (css_parent_selector,stylefy_manual_styles,temp__5737__auto__,map__33038,map__33038__$1,style,props,hash,custom_selector){
+return (function (p1__33036_SHARP_){
+if(cljs.core.map_QMARK_(p1__33036_SHARP_)){
+return stylefy.impl.utils.filter_css_props(p1__33036_SHARP_);
+} else {
+return p1__33036_SHARP_;
+}
+});})(css_parent_selector,stylefy_manual_styles,temp__5737__auto__,map__33038,map__33038__$1,style,props,hash,custom_selector))
+,cljs.core.identity,manual_style);
+var garden_style_definition = cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [css_parent_selector], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [manual_selector_and_css_props], null));
+var css_class = garden.core.css.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([options,garden_style_definition], 0));
+return css_class;
+});})(css_parent_selector,stylefy_manual_styles,temp__5737__auto__,map__33038,map__33038__$1,style,props,hash,custom_selector))
+,stylefy_manual_styles);
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.str,css_manual_styles);
+} else {
+return null;
+}
+});
+/**
+ * Converts the given style to CSS. Options are sent directly to Garden
+ */
+stylefy.impl.conversion.style__GT_css = (function stylefy$impl$conversion$style__GT_css(var_args){
+var G__33041 = arguments.length;
+switch (G__33041) {
+case 1:
+return stylefy.impl.conversion.style__GT_css.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
+
+break;
+case 2:
+return stylefy.impl.conversion.style__GT_css.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
+
+break;
+default:
+throw (new Error(["Invalid arity: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(arguments.length)].join('')));
+
+}
+});
+
+stylefy.impl.conversion.style__GT_css.cljs$core$IFn$_invoke$arity$1 = (function (style){
+return stylefy.impl.conversion.style__GT_css.cljs$core$IFn$_invoke$arity$2(style,cljs.core.PersistentArrayMap.EMPTY);
+});
+
+stylefy.impl.conversion.style__GT_css.cljs$core$IFn$_invoke$arity$2 = (function (p__33042,options){
+var map__33043 = p__33042;
+var map__33043__$1 = (((((!((map__33043 == null))))?(((((map__33043.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__33043.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map,map__33043):map__33043);
+var style = map__33043__$1;
+var props = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33043__$1,cljs.core.cst$kw$props);
+var hash = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__33043__$1,cljs.core.cst$kw$hash);
+var css_class = stylefy.impl.conversion.convert_base_style_into_class(style,options);
+var css_media_queries = stylefy.impl.conversion.convert_media_queries(style,options);
+var css_supports = stylefy.impl.conversion.convert_supports_rules(style,options);
+var css_manual_styles = stylefy.impl.conversion.convert_manual_styles(style,options);
+return [cljs.core.str.cljs$core$IFn$_invoke$arity$1(css_class),cljs.core.str.cljs$core$IFn$_invoke$arity$1(css_media_queries),cljs.core.str.cljs$core$IFn$_invoke$arity$1(css_supports),cljs.core.str.cljs$core$IFn$_invoke$arity$1(css_manual_styles)].join('');
+});
+
+stylefy.impl.conversion.style__GT_css.cljs$lang$maxFixedArity = 2;
+
