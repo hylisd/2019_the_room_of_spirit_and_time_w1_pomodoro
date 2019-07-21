@@ -51,8 +51,8 @@ pomodoro.core.render_component_to_app = (function pomodoro$core$render_component
 return reagent.core.render.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [component], null),document.getElementById("app"));
 });
 pomodoro.core.mount_root = (function pomodoro$core$mount_root(){
-return pomodoro.core.render_component_to_app((function (){var fexpr__33232 = cljs.core.deref(pomodoro.core.current_page);
-return (fexpr__33232.cljs$core$IFn$_invoke$arity$1 ? fexpr__33232.cljs$core$IFn$_invoke$arity$1(pomodoro.core.route) : fexpr__33232.call(null,pomodoro.core.route));
+return pomodoro.core.render_component_to_app((function (){var fexpr__33238 = cljs.core.deref(pomodoro.core.current_page);
+return (fexpr__33238.cljs$core$IFn$_invoke$arity$1 ? fexpr__33238.cljs$core$IFn$_invoke$arity$1(pomodoro.core.route) : fexpr__33238.call(null,pomodoro.core.route));
 })());
 });
 pomodoro.core.init_router = (function pomodoro$core$init_router(){
