@@ -48,7 +48,5 @@
       [pomodoro.todo-list/clock-circle]]
      [:div#middle {:style {:width "500px" :height "800px" :position "relative"}}
       [middle-part]]
-     [:div#right {:style {:width "100px"
-                          :height "800px"
-                          :position "relative"}}
-      [pomodoro.todo-list/exit-to-main]]]))
+     [pomodoro.main/logo]
+     [pomodoro.todo-list/exit-to-main]]))

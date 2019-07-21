@@ -22,15 +22,19 @@
                 (stop)
                 )]
     (fn [props]
-      [:input (merge (dissoc props :on-save :on-stop)
-                     (stylefy/use-style style/main-input)
-                     {:value @val
-                      :on-blur save
-                      :on-change #(reset! val (-> % .-target .-value))
-                      :on-key-down #(case (.-which %)
-                                      13 (save)
-                                      27 (stop)
-                                      nil )})])))
+      [:div {:style {:position "relative"}}
+       [:div {:style {:positon "absolute"}}
+        [:i.material-icons {:style {:position "absolute" :right "50px" :top "18px" :color "#FF4384" :cursor "pointer"}
+                            :on-click save} "add"]
+        [:input (merge (dissoc props :on-save :on-stop)
+                       (stylefy/use-style style/main-input)
+                       {:value @val
+                        :on-blur save
+                        :on-change #(reset! val (-> % .-target .-value))
+                        :on-key-down #(case (.-which %)
+                                        13 (save)
+                                        27 (stop)
+                                        nil )})]]])))
 
 (defn timer-digital []
   [:div {:style {:display "block" :color "#FF4384" :font-size "176px"}}
@@ -134,26 +138,42 @@
      [:i.material-icons {:style {:font-size "36px"}} name]]
     ))
 
+(defn logo []
+  [:div#logo {:style {:position "absolute"
+                      :padding-top "15px"
+                      :bottom "150px"
+                      :right "70px"
+                      :font-size "24px"
+                      :width "48px"
+                      :color "#FFF"
+                      :font-weight "bold"
+                      :transform "rotate(90deg)"}}
+   "POMODORO"])
+
+
 (defn page-banner []
   [:div#page-banner {:style {:height "800px"
                              :width "36px"
                              :display "flex"
+                             :position "absolute"
                              :flex-direction "column"
+                             :right "85px"
                              :margin-left "65px"
                              :color "white"}}
    [:div#menu {:style {:margin-top "48px" :width "36px"}}
     [nav-icon {:name "format_list_bulleted" :on-click #(reset! pomodoro.core.current-page :todo-list)}]
     [nav-icon {:name "insert_chart" :on-click #(reset! pomodoro.core.current-page :analytics)}]
     [nav-icon {:name "library_music" :on-click #(reset! pomodoro.core.current-page :ringtones)}]]
-   [:div#logo {:style {:position "absolute" :padding-top "15px" :bottom "220px" :font-size "24px" :width "48px" :transform "rotate(90deg)"}} "POMODORO"]])
+   ])
 
 
 (defn sub-main []
   (fn []
-    [:div#container {:style {:position "relative" :display "flex"}}
+    [:div#container {:style {:display "flex"}}
      [task-board]
      [timer-circle]
-     [page-banner]]))
+     [page-banner]
+     [logo]]))
 
 (defn main-page []
   (fn []

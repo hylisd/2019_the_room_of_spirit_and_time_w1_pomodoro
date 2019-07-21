@@ -26,29 +26,26 @@
              :nrepl-middleware [cider.piggieback/wrap-cljs-repl]
              :css-dirs ["public/css"]}
 
-  :cljsbuild {:builds {:app
-                       {:source-paths ["src" "env/dev/cljs"]
-                        :compiler
-                        {:main "pomodoro.dev"
-                         :output-to "public/js/app.js"
-                         :output-dir "public/js/out"
-                         :asset-path   "js/out"
-                         :source-map true
-                         :externs ["externs.js"]
-                         :optimizations :none
-                         :pretty-print  true}
-                        :figwheel
-                        {:on-jsload "pomodoro.core/mount-root"
-                         :open-urls ["http://localhost:3449/index.html"]}}
-                       :release
-                       {:source-paths ["src" "env/prod/cljs"]
-                        :compiler
-                        {:output-to "public/js/app.js"
-                         :output-dir "public/js/release"
-                         :optimizations :advanced
-                         :infer-externs true
-                         :externs ["externs.js"]
-                         :pretty-print false}}}}
+  :cljsbuild {:builds {:app {:source-paths ["src" "env/dev/cljs"]
+                             :compiler
+                             {:main "pomodoro.dev"
+                              :output-to "public/js/app.js"
+                              :output-dir "public/js/out"
+                              :asset-path   "js/out"
+                              :source-map true
+                              :externs ["externs.js"]
+                              :optimizations :none
+                              :pretty-print  true}
+                             :figwheel {:on-jsload "pomodoro.core/mount-root"
+                                        :open-urls ["http://localhost:3449/index.html"]}}
+                       :release {:source-paths ["src" "env/prod/cljs"]
+                                 :compiler
+                                 {:output-to "public/js/app.js"
+                                  :output-dir "public/js/release"
+                                  :optimizations :advanced
+                                  :infer-externs true
+                                  :externs ["externs.js"]
+                                  :pretty-print false}}}}
 
   :aliases {"package" ["do" "clean" ["cljsbuild" "once" "release"]]}
 

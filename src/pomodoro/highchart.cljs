@@ -2,8 +2,8 @@
   (:require [reagent.core :as r]))
 
 (defn home-render []
-  [:div {:style {:min-width "310px" :max-width "800px"
-                 :height "400px" :margin "0 auto"}}])
+  [:div {:style {:height "250px"
+                 :width "420px" :margin "0 auto"}}])
 (def chart-config
   {:chart {:type "bar"}
    :title {:text "Historic World Population by Region"}
@@ -37,4 +37,4 @@
 
 (defn home []
   (r/create-class {:reagent-render home-render
-                         :component-did-mount home-did-mount}))
+                   :component-did-mount home-did-mount}))

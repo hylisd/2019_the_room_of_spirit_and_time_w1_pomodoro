@@ -53,10 +53,13 @@
 (def main-input
   {:width "445px"
    :height "56px"
-   :color "#FF4384"
+   :color "block"
    :font-size "16px"
-   ::stylefy/mode {:placeholder
-                   {:color "#FF4384"}
+   :padding-left "14px"
+   ::stylefy/mode {"::placeholder"
+                   {:color "#FF4384"
+                    :font-weight "bold"
+                    :padding-left "16px"}
                    }})
 
 (def inner-circle
@@ -81,3 +84,10 @@
    :position "absolute"
    :left "22%"
    :top "22%"})
+
+
+(def circle-icon-2
+  {
+   :position "relative"
+   :font-size "45px"
+   })
